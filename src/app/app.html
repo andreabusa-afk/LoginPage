@@ -1,0 +1,9 @@
+<div class="body">
+  <div class="justify"><h1>Email:</h1> <input [(ngModel)]="email" type="email"></div>
+  <div class="justify"><h1>Password:</h1><input [(ngModel)]="password" type="password"></div>
+  <br>
+  <button (click)="Validate()">Validate</button>
+  <p [style.color]="answer !== 'Logged in successfully' ? 'red' : 'green'">
+    {{ (answer != 'Logged in successfully') ? answer : answer }}
+  </p>
+</div>
