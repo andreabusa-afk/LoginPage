@@ -1,9 +1,37 @@
-<div class="body">
-  <div class="justify"><h1>Email:</h1> <input [(ngModel)]="email" type="email"></div>
-  <div class="justify"><h1>Password:</h1><input [(ngModel)]="password" type="password"></div>
-  <br>
-  <button (click)="Validate()">Validate</button>
-  <p [style.color]="answer !== 'Logged in successfully' ? 'red' : 'green'">
-    {{ (answer != 'Logged in successfully') ? answer : answer }}
-  </p>
+<div class="header">
+  <div class="left">
+    <span class="logo">M</span>icroLearn+
+  </div>
+
+  <div class="right">
+    <a routerLink="/">Home</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/login">Login</a>
+  </div>
 </div>
+
+<div class="page">
+  <div class="card">
+
+    <h2>Login</h2>
+
+    <div class="input-group">
+      <label>Email</label>
+      <input [(ngModel)]="email" type="email">
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+      <input [(ngModel)]="password" type="password">
+    </div>
+
+    <button (click)="Validate()">Sign In</button>
+
+    <p [style.color]="answer !== 'Logged in successfully' ? '#ff6b6b' : '#00ffae'">
+      {{answer}}
+    </p>
+
+  </div>
+</div>
+
+<router-outlet></router-outlet>
