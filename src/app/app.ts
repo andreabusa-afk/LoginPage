@@ -1,35 +1,96 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  standalone: true,                 
-  imports: [RouterOutlet, FormsModule],
+  standalone: true,
+  imports: [FormsModule, NgIf],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']       
+  styleUrls: ['./app.css']
 })
 export class App {
+
   protected readonly title = signal('login');
+
+  isLogin: boolean = true;
+
   email: string = '';
   password: string = '';
-  answer: string = '';
-  public Validate() {
-    const emailIn = "chris@gmail.com";
-    const passwordIn = "chris";
 
-    if (!this.email && !this.password) {
-      this.answer = "Empty email and password";
-      
-    } else if (!this.email) {
-      this.answer = "Empty email";
-    } else if (!this.password) {
-      this.answer = "Empty password";
-    } else if (this.email === emailIn && this.password === passwordIn) {
-      this.answer = "Logged in successfully";
-    } else {
-      this.answer = "Invalid credentials";
+  regEmail: string = '';
+  regPassword: string = '';
+  role: string = 'student';
+
+  message: string = '';
+
+  students: any[] = [];
+  instructors: any[] = [];
+
+  switchForm(){
+    this.isLogin = !this.isLogin;
+    this.message = '';
+  }
+
+  register(){
+
+    if(!this.regEmail || !this.regPassword){
+      this.message = "Fill all fields";
+      return;
     }
+
+    const user = {
+      email: this.regEmail,
+      password: this.regPassword
+    };
+
+    if(this.role === 'student'){
+      this.students.push(user);
+    }else{
+      this.instructors.push(user);
+    }
+
+    this.message = "Registration successful";
+
+    this.regEmail = '';
+    this.regPassword = '';
+  }
+
+  Validate(){
+
+    if(!this.email && !this.password){
+      this.message = "Empty email and password";
+      return;
+    }
+
+    if(!this.email){
+      this.message = "Empty email";
+      return;
+    }
+
+    if(!this.password){
+      this.message = "Empty password";
+      return;
+    }
+
+    const student = this.students.find(
+      u => u.email === this.email && u.password === this.password
+    );
+
+    const instructor = this.instructors.find(
+      u => u.email === this.email && u.password === this.password
+    );
+
+    if(student){
+      this.message = "Logged in as Student";
+    }
+    else if(instructor){
+      this.message = "Logged in as Instructor";
+    }
+    else{
+      this.message = "Invalid credentials";
+    }
+
   }
 
 }
